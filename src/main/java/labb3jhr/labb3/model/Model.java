@@ -13,14 +13,23 @@ public class Model {
 
     private ShapeType shapeTypeInput;
 
+    private DrawingShape selectedShape;
     private InputMode inputMode;
     public Model() {
         shapeTypeInput = ShapeType.SQUARE;
+        inputMode = InputMode.DRAW;
         //    text = new SimpleStringProperty();
     }
 
     public List<DrawingShape> getShapesList() {
         return shapesList;
+    }
+    public InputMode getInputMode() {
+        return inputMode;
+    }
+
+    public void setInputMode(InputMode inputMode) {
+        this.inputMode = inputMode;
     }
 
     public ShapeType getShapeTypeInput() {
@@ -30,7 +39,16 @@ public class Model {
     public void setShapeTypeInput(ShapeType shapeTypeInput) {
         this.shapeTypeInput = shapeTypeInput;
     }
-/*public String getText() {
+
+    public DrawingShape getSelectedShape() {
+        return selectedShape;
+    }
+
+    public void setSelectedShape(DrawingShape selectedShape) {
+        this.selectedShape = selectedShape;
+    }
+
+    /*public String getText() {
         return text.get();
     }
 

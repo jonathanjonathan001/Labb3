@@ -1,5 +1,6 @@
 package labb3jhr.labb3.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -8,9 +9,7 @@ import javafx.scene.control.ColorPicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
-import labb3jhr.labb3.model.DrawingShape;
-import labb3jhr.labb3.model.Model;
-import labb3jhr.labb3.model.ShapeType;
+import labb3jhr.labb3.model.*;
 
 
 public class DrawController {
@@ -43,15 +42,15 @@ public class DrawController {
     }
 
 
-     // welcomeText.setText(hellomodel.getText());
+    // welcomeText.setText(hellomodel.getText());
 
     @FXML
     protected void onCircleButtonClicked() {
         model.setShapeTypeInput(ShapeType.CIRCLE);
-        System.out.println("Circle button clicked!");
-        // helloModel.setText("");
+
 
     }
+
     @FXML
     protected void onSquareButtonClicked() {
         model.setShapeTypeInput(ShapeType.SQUARE);
@@ -61,27 +60,29 @@ public class DrawController {
     @FXML
     protected void onClearButtonClicked() {
         System.out.println("Clear button clicked!");
+        model.setSelectedShape(null);
         context.setFill(Color.WHITE);
-        context.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
+
 
     @FXML
     protected void render() {
         context.setFill(Color.WHITE);
-        context.fillRect(0,0, canvas.getWidth(), canvas.getHeight());
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
-        for ( DrawingShape shape : model.getShapesList()) {
+        for (DrawingShape shape : model.getShapesList()) {
             switch (shape.shapeType()) {
                 case CIRCLE -> {
                     context.setFill(shape.color());
-                    context.fillOval(shape.x() - shape.size()/2,
-                                    shape.y() - shape.size()/2,
-                                    shape.size(), shape.size());
+                    context.fillOval(shape.getPosition().x() ,
+                            shape.getPosition().y() ,
+                            shape.size(), shape.size());
                 }
                 case SQUARE -> {
                     context.setFill(shape.color());
-                    context.fillRect(shape.x() - shape.size()/2,
-                            shape.y() - shape.size()/2,
+                    context.fillRect(shape.getPosition().x(),
+                            shape.getPosition().y(),
                             shape.size(), shape.size());
 
                 }
@@ -89,6 +90,7 @@ public class DrawController {
         }
 
     }
+
     @FXML
     protected void onCanvasClicked(MouseEvent mouseEvent) {
 
@@ -105,11 +107,61 @@ public class DrawController {
             // System.out.println();
         }
 
-        ShapeType actualShapeType = model.getShapeTypeInput();
-        Color actualColor = colorPicker.getValue();
-        model.getShapesList().add(new DrawingShape(x,y,size,actualColor,actualShapeType));
 
-        render();
+        switch (model.getInputMode()) {
 
+            case DRAW -> {
+
+                ShapeType actualShapeType = model.getShapeTypeInput();
+                Color actualColor = colorPicker.getValue();
+                model.getShapesList().add(new DrawingShape(new Position(x-size/2,y-size/2), size, actualColor, actualShapeType));
+
+                render();
+            }
+            case SELECT -> {
+                System.out.println("Select mode selected!");
+
+                if (!model.getShapesList().isEmpty()) {
+                    for (int i = model.getShapesList().size() - 1; i >= 0; i--) {
+                        if (model.getShapesList().get(i).mouseCoordinatesAreOnMe(x, y)) {
+                            model.setSelectedShape(model.getShapesList().get(i));
+                            break;
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+    }
+
+    @FXML
+    protected void onOkButtonClicked() {
+        if (model.getSelectedShape() != null) {
+            model.getSelectedShape().setColor(colorPicker.getValue());
+
+            double size = 0;
+            try {
+                size = Double.parseDouble(sizeTextField.getText());
+            } catch (Exception ignored) {
+
+            }
+
+            model.getSelectedShape().setSize(size);
+
+            render();
+        }
+    }
+
+
+    @FXML
+    protected void onDrawModeClicked() {
+        model.setInputMode(InputMode.DRAW);
+    }
+
+    @FXML
+    protected void onSelectModeClicked() {
+        model.setInputMode(InputMode.SELECT);
     }
 }

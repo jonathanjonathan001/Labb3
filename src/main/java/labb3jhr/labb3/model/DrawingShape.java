@@ -5,26 +5,20 @@ import javafx.scene.paint.Color;
 import java.util.Objects;
 
 public final class DrawingShape {
-    private final double x;
-    private final double y;
+    private final Position position;
     private double size;
     private Color color;
     private final ShapeType shapeType;
 
-    public DrawingShape(double x, double y, double size, Color color, ShapeType shapeType) {
-        this.x = x;
-        this.y = y;
+    public DrawingShape(Position position, double size, Color color, ShapeType shapeType) {
+        this.position = position;
         this.size = size;
         this.color = color;
         this.shapeType = shapeType;
     }
 
-    public double x() {
-        return x;
-    }
-
-    public double y() {
-        return y;
+    public Position getPosition() {
+        return position;
     }
 
     public double size() {
@@ -47,31 +41,29 @@ public final class DrawingShape {
         this.color = color;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == this) return true;
-        if (obj == null || obj.getClass() != this.getClass()) return false;
-        var that = (DrawingShape) obj;
-        return Double.doubleToLongBits(this.x) == Double.doubleToLongBits(that.x) &&
-                Double.doubleToLongBits(this.y) == Double.doubleToLongBits(that.y) &&
-                Double.doubleToLongBits(this.size) == Double.doubleToLongBits(that.size) &&
-                Objects.equals(this.color, that.color) &&
-                Objects.equals(this.shapeType, that.shapeType);
+    public boolean mouseCoordinatesAreOnMe(double mouseX, double mouseY) {
+        // TODO implement method by comparing mouse coordinates with object
+        switch (shapeType) {
+            case CIRCLE -> {
+                // formula:
+                // (x - center_x)^2 + (y-center_y)^2 < radius^2
+
+                double dx = mouseX - (position.x() + size/2) ;
+                double dy = mouseY - (position.y() + size/2);
+
+                return (dx * dx) + (dy * dy) <= ((size / 2) * (size / 2));
+            }
+            case SQUARE -> {
+                if (mouseX >= (position.x()) && mouseX <= position.x() + size
+                        && mouseY >= (position.y()) && mouseY <= (position.y() + size)) {
+                    System.out.println("Mouse coordinates match");
+                    return true;
+                } else
+                    return false;
+            }
+        }
+        return true;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y, size, color, shapeType);
-    }
-
-    @Override
-    public String toString() {
-        return "DrawingShape[" +
-                "x=" + x + ", " +
-                "y=" + y + ", " +
-                "size=" + size + ", " +
-                "color=" + color + ", " +
-                "shapeType=" + shapeType + ']';
-    }
 
 }
