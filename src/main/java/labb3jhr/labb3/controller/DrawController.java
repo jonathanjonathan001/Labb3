@@ -72,24 +72,10 @@ public class DrawController {
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
         for (DrawingShape shape : model.getShapesList()) {
-            switch (shape.shapeType()) {
-                case CIRCLE -> {
-                    context.setFill(shape.color());
-                    context.fillOval(shape.getPosition().x() ,
-                            shape.getPosition().y() ,
-                            shape.size(), shape.size());
-                }
-                case SQUARE -> {
-                    context.setFill(shape.color());
-                    context.fillRect(shape.getPosition().x(),
-                            shape.getPosition().y(),
-                            shape.size(), shape.size());
-
-                }
-            }
+            shape.draw(context);
         }
-
     }
+
 
     @FXML
     protected void onCanvasClicked(MouseEvent mouseEvent) {
@@ -114,7 +100,8 @@ public class DrawController {
 
                 ShapeType actualShapeType = model.getShapeTypeInput();
                 Color actualColor = colorPicker.getValue();
-                model.getShapesList().add(new DrawingShape(new Position(x-size/2,y-size/2), size, actualColor, actualShapeType));
+                createShape(actualShapeType, actualColor, x, y, size);
+
 
                 render();
             }
@@ -133,6 +120,19 @@ public class DrawController {
 
         }
 
+
+    }
+
+    @FXML
+    private void createShape(ShapeType actualShapeType, Color actualColor, double x, double y, double size) {
+        switch (actualShapeType) {
+            case CIRCLE -> model.getShapesList().add(
+                    new Circle(new Position(x - size/2, y - size/2),
+                            size, actualColor));
+            case SQUARE -> model.getShapesList().add(
+                    new Square(new Position(x - size/2, y - size/2),
+                            size, actualColor));
+        }
 
     }
 
