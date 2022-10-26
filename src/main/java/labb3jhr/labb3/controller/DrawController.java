@@ -11,6 +11,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import labb3jhr.labb3.model.*;
 
+import java.util.List;
+
 
 public class DrawController {
 
@@ -61,6 +63,7 @@ public class DrawController {
     protected void onClearButtonClicked() {
         System.out.println("Clear button clicked!");
         model.setSelectedShape(null);
+        model.getShapesList().clear();
         context.setFill(Color.WHITE);
         context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
     }
@@ -127,10 +130,10 @@ public class DrawController {
     private void createShape(ShapeType actualShapeType, Color actualColor, double x, double y, double size) {
         switch (actualShapeType) {
             case CIRCLE -> model.getShapesList().add(
-                    new Circle(new Position(x - size/2, y - size/2),
+                    new Circle(new Position(x - size / 2, y - size / 2),
                             size, actualColor));
             case SQUARE -> model.getShapesList().add(
-                    new Square(new Position(x - size/2, y - size/2),
+                    new Square(new Position(x - size / 2, y - size / 2),
                             size, actualColor));
         }
 
@@ -164,4 +167,25 @@ public class DrawController {
     protected void onSelectModeClicked() {
         model.setInputMode(InputMode.SELECT);
     }
+
+    @FXML
+    protected void onUndoClicked() {
+        switch (model.getInputMode()) {
+            case DRAW -> {
+                List<DrawingShape> shapesList = model.getShapesList();
+                if (!shapesList.isEmpty()) {
+                    model.setUndoObject(model.getShapesList().get(shapesList.size() - 1));
+                    shapesList.remove(shapesList.size() - 1);
+                    render();
+                }
+            }
+            case SELECT -> {
+            }
+        }
+
+    }
+
+    @FXML
+    protected void onRedoClicked() {}
+
 }

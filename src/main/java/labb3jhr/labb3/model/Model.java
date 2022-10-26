@@ -11,6 +11,8 @@ public class Model {
 
     private List<DrawingShape> shapesList = new ArrayList<>();
 
+
+    private DrawingShape undoObject;
     private ShapeType shapeTypeInput;
 
     private DrawingShape selectedShape;
@@ -21,6 +23,13 @@ public class Model {
         //    text = new SimpleStringProperty();
     }
 
+    public DrawingShape getUndoObject() {
+        return undoObject;
+    }
+
+    public void setUndoObject(DrawingShape undoObject) {
+        this.undoObject = undoObject;
+    }
     public List<DrawingShape> getShapesList() {
         return shapesList;
     }
