@@ -11,7 +11,7 @@ public class Model {
 
     private List<DrawingShape> shapesList = new ArrayList<>();
 
-
+    private boolean undoDone;
     private DrawingShape undoObject;
     private ShapeType shapeTypeInput;
 
@@ -55,6 +55,14 @@ public class Model {
 
     public void setSelectedShape(DrawingShape selectedShape) {
         this.selectedShape = selectedShape;
+    }
+
+    public boolean getUndoDone() {
+        return undoDone;
+    }
+
+    public void setUndoDone(boolean set) {
+        undoDone = set;
     }
 
     /*public String getText() {

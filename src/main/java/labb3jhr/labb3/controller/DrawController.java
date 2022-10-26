@@ -160,11 +160,13 @@ public class DrawController {
 
     @FXML
     protected void onDrawModeClicked() {
+        model.setUndoDone(false);
         model.setInputMode(InputMode.DRAW);
     }
 
     @FXML
     protected void onSelectModeClicked() {
+        model.setUndoDone(false);
         model.setInputMode(InputMode.SELECT);
     }
 
@@ -173,10 +175,14 @@ public class DrawController {
         switch (model.getInputMode()) {
             case DRAW -> {
                 List<DrawingShape> shapesList = model.getShapesList();
-                if (!shapesList.isEmpty()) {
-                    model.setUndoObject(model.getShapesList().get(shapesList.size() - 1));
-                    shapesList.remove(shapesList.size() - 1);
-                    render();
+                if (!model.getUndoDone()) {
+                    if (!shapesList.isEmpty()) {
+
+                        model.setUndoObject(model.getShapesList().get(shapesList.size() - 1));
+                        shapesList.remove(shapesList.size() - 1);
+                        model.setUndoDone(true);
+                        render();
+                    }
                 }
             }
             case SELECT -> {
@@ -186,6 +192,7 @@ public class DrawController {
     }
 
     @FXML
-    protected void onRedoClicked() {}
+    protected void onRedoClicked() {
+    }
 
 }
