@@ -2,6 +2,7 @@ package labb3jhr.labb3.model;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +12,11 @@ public class Model {
 
     private List<DrawingShape> shapesList = new ArrayList<>();
 
+    private double undoSize;
+    private double redoSize;
+    private Color undoColor;
+
+    private Color redoColor;
     private boolean undoDone;
     private DrawingShape undoObject;
     private ShapeType shapeTypeInput;
@@ -63,6 +69,38 @@ public class Model {
 
     public void setUndoDone(boolean set) {
         undoDone = set;
+    }
+
+    public void setUndoSize(double size) {
+        undoSize = size;
+    }
+
+    public double getUndoSize() {
+        return undoSize;
+    }
+
+    public Color getUndoColor() {
+        return undoColor;
+    }
+
+    public void setUndoColor(Color undoColor) {
+        this.undoColor = undoColor;
+    }
+
+    public double getRedoSize() {
+        return redoSize;
+    }
+
+    public void setRedoSize(double redoSize) {
+        this.redoSize = redoSize;
+    }
+
+    public Color getRedoColor() {
+        return redoColor;
+    }
+
+    public void setRedoColor(Color redoColor) {
+        this.redoColor = redoColor;
     }
 
     /*public String getText() {

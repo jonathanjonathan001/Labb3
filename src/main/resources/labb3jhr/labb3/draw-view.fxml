@@ -31,8 +31,7 @@
             <Button mnemonicParsing="false" onAction="#onSelectModeClicked" text="Select mode" />
             <Button fx:id="undoButton" mnemonicParsing="false" onAction="#onUndoClicked" prefHeight="26.0" prefWidth="47.0" text="Undo" />
             <Button fx:id="redoButton" mnemonicParsing="false" onAction="#onRedoClicked" text="Redo" />
-            <Button fx:id="saveButton" mnemonicParsing="false" text="Save" />
-            <Button fx:id="loadButton" mnemonicParsing="false" text="Load" />
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#onSaveClicked" text="Save" />
          </children>
       </VBox>
    </children>

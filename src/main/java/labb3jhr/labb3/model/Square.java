@@ -29,5 +29,21 @@ public class Square extends DrawingShape {
                 getSize(), getSize());
     }
 
+    @Override
+    public String toSVG() {
+
+        String color = String.format(
+                "%02X%02X%02X"
+                , Math.round(getColor().getRed()*255)
+                , Math.round(getColor().getGreen()*255)
+                , Math.round(getColor().getBlue()*255)
+        );
+
+
+        return "<rect x=\"" + getPosition().x() + "\" y=\"" + getPosition().y() +
+                "\" width=\"" + getSize() + "\" height=\"" + getSize() +
+                "\" stroke=\"black\" stroke-width=\"0\" fill=\"#" + color + "\" />";
+    }
+
 
 }

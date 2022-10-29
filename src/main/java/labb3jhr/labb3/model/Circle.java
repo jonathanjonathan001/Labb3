@@ -31,6 +31,19 @@ public class Circle extends DrawingShape {
                 getPosition().y() ,
                 getSize(), getSize());
     }
+
+    @Override
+    public String toSVG() {
+        String color = String.format(
+                "%02X%02X%02X"
+                , Math.round(getColor().getRed()*255)
+                , Math.round(getColor().getGreen()*255)
+                , Math.round(getColor().getBlue()*255)
+        );
+        // String color = Integer.toHexString(getColor().hashCode()).substring(0, 6).toUpperCase();
+        return "<circle cx=\"" + (getPosition().x() + getSize()/2) + "\" cy=\"" + (getPosition().y() + getSize()/2) +
+                "\" r=\""+ (getSize()/2) + "\" stroke=\"black\" stroke-width=\"0\" fill=\"#" + color +"\" />";
+    }
 }
 
 

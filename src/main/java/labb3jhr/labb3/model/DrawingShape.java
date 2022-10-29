@@ -43,4 +43,5 @@ public abstract class DrawingShape {
 
     public abstract void draw(GraphicsContext context);
 
+    public abstract String toSVG();
 }
