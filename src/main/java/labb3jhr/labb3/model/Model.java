@@ -29,6 +29,18 @@ public class Model {
         //    text = new SimpleStringProperty();
     }
 
+    public void createShape(Color actualColor, double x, double y, double size) {
+        switch (shapeTypeInput) {
+            case CIRCLE -> shapesList.add(
+                    new Circle(new Position(x - size / 2, y - size / 2),
+                            size, actualColor));
+            case SQUARE -> shapesList.add(
+                    new Square(new Position(x - size / 2, y - size / 2),
+                            size, actualColor));
+        }
+
+    }
+
     public DrawingShape getUndoObject() {
         return undoObject;
     }
