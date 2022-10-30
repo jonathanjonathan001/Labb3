@@ -27,13 +27,8 @@ public class DrawController {
     @FXML
     private Canvas canvas;
 
-
     @FXML
     private GraphicsContext context;
-
-
-    @FXML
-    private Button circleButton;
 
     @FXML
     private TextField sizeTextField;
@@ -42,31 +37,23 @@ public class DrawController {
     private ColorPicker colorPicker;
 
     public void initialize() {
-        // textField1.textProperty().bindBidirectional(model.textProperty());
-        // welcomeText.textProperty().bind(helloModel.textProperty());
+
         sizeTextField.setText("20");
         context = canvas.getGraphicsContext2D();
     }
 
-
-    // welcomeText.setText(hellomodel.getText());
-
     @FXML
     protected void onCircleButtonClicked() {
         model.setShapeTypeInput(ShapeType.CIRCLE);
-
-
     }
 
     @FXML
     protected void onSquareButtonClicked() {
         model.setShapeTypeInput(ShapeType.SQUARE);
-        System.out.println("Square button clicked!");
     }
 
     @FXML
     protected void onClearButtonClicked() {
-        System.out.println("Clear button clicked!");
         model.setSelectedShape(null);
         model.getShapesList().clear();
         context.setFill(Color.WHITE);
@@ -89,17 +76,15 @@ public class DrawController {
     protected void onCanvasClicked(MouseEvent mouseEvent) {
 
         model.setUndoDone(false);
-        // System.out.println("Canvas clicked!");
 
         double x = mouseEvent.getX();
         double y = mouseEvent.getY();
-        // gc.moveTo(x,y);
+
         double size = 0;
         try {
             size = Double.parseDouble(sizeTextField.getText());
-        } catch (Exception e) {
-            //throw new RuntimeException(e);
-            // System.out.println();
+        } catch (Exception ignored) {
+
         }
 
 
@@ -114,8 +99,6 @@ public class DrawController {
                 render();
             }
             case SELECT -> {
-                System.out.println("Select mode selected!");
-
                 if (!model.getShapesList().isEmpty()) {
                     for (int i = model.getShapesList().size() - 1; i >= 0; i--) {
                         if (model.getShapesList().get(i).mouseCoordinatesAreOnMe(x, y)) {
@@ -132,15 +115,12 @@ public class DrawController {
     }
 
 
-
-
     @FXML
     protected void onOkButtonClicked() {
         if (model.getSelectedShape() != null) {
 
             model.setUndoColor(model.getSelectedShape().getColor());
             model.getSelectedShape().setColor(colorPicker.getValue());
-
 
             double size = 0;
             try {
@@ -219,7 +199,7 @@ public class DrawController {
     @FXML
     protected void onSaveClicked() {
 
-        
+
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Save as..");
         fileChooser.getExtensionFilters().addAll(
@@ -241,7 +221,7 @@ public class DrawController {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("" +
                 "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\"" +
-                " width=\"" + (int)width + "\" height=\""+ (int)height + "\">\n");
+                " width=\"" + (int) width + "\" height=\"" + (int) height + "\">\n");
 
         if (!model.getShapesList().isEmpty()) {
             for (DrawingShape shape : model.getShapesList()) {
@@ -252,7 +232,7 @@ public class DrawController {
 
 
         stringBuilder.append("</svg>");
-        
+
         writeToSvgFile(stringBuilder, path);
     }
 

@@ -1,14 +1,12 @@
 package labb3jhr.labb3.model;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.scene.paint.Color;
 
+import javafx.scene.paint.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Model {
-//    private StringProperty text;
+
 
     private List<DrawingShape> shapesList = new ArrayList<>();
 
@@ -26,7 +24,7 @@ public class Model {
     public Model() {
         shapeTypeInput = ShapeType.SQUARE;
         inputMode = InputMode.DRAW;
-        //    text = new SimpleStringProperty();
+
     }
 
     public void createShape(Color actualColor, double x, double y, double size) {
@@ -115,16 +113,5 @@ public class Model {
         this.redoColor = redoColor;
     }
 
-    /*public String getText() {
-        return text.get();
-    }
 
-    public void setText(String text) {
-        this.text.set(text);
-
-    }
-
-    public StringProperty textProperty() {
-        return text;
-    }*/
 }
