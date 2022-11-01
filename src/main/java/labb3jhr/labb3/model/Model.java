@@ -16,6 +16,8 @@ public class Model {
 
     private Color redoColor;
     private boolean undoDone;
+
+    private ShapeType lastActionShapeType;
     private DrawingShape undoObject;
     private ShapeType shapeTypeInput;
 
@@ -46,6 +48,15 @@ public class Model {
     public void setUndoObject(DrawingShape undoObject) {
         this.undoObject = undoObject;
     }
+
+    public ShapeType getLastActionShapeType() {
+        return lastActionShapeType;
+    }
+
+    public void setLastActionShapeType(ShapeType lastActionShapeType) {
+        this.lastActionShapeType = lastActionShapeType;
+    }
+
     public List<DrawingShape> getShapesList() {
         return shapesList;
     }

@@ -36,6 +36,8 @@ public class DrawController {
     @FXML
     private ColorPicker colorPicker;
 
+
+
     public void initialize() {
 
         sizeTextField.setText("20");
@@ -205,14 +207,15 @@ public class DrawController {
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("SVG Files", "*.svg"));
         File file = fileChooser.showSaveDialog(sizeTextField.getScene().getWindow());
-        Path path = Path.of(file.getAbsolutePath());
+        if (file != null) {
+            Path path = Path.of(file.getAbsolutePath());
 
-        Thread thread1 = new Thread(() -> {
-            System.out.println(path);
-            saveFile(path);
-        });
-        thread1.start();
+            Thread thread1 = new Thread(() -> {
 
+                saveFile(path);
+            });
+            thread1.start();
+        }
     }
 
     private void saveFile(Path path) {
@@ -229,7 +232,6 @@ public class DrawController {
                 stringBuilder.append("\n");
             }
         }
-
 
         stringBuilder.append("</svg>");
 
