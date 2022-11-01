@@ -17,7 +17,7 @@ public class Model {
     private Color redoColor;
     private boolean undoDone;
 
-    private ShapeType lastActionShapeType;
+    private InputMode lastActionInputMode;
     private DrawingShape undoObject;
     private ShapeType shapeTypeInput;
 
@@ -26,7 +26,7 @@ public class Model {
     public Model() {
         shapeTypeInput = ShapeType.SQUARE;
         inputMode = InputMode.DRAW;
-
+        lastActionInputMode = InputMode.DRAW;
     }
 
     public void createShape(Color actualColor, double x, double y, double size) {
@@ -49,12 +49,12 @@ public class Model {
         this.undoObject = undoObject;
     }
 
-    public ShapeType getLastActionShapeType() {
-        return lastActionShapeType;
+    public InputMode getLastActionInputMode() {
+        return lastActionInputMode;
     }
 
-    public void setLastActionShapeType(ShapeType lastActionShapeType) {
-        this.lastActionShapeType = lastActionShapeType;
+    public void setLastActionInputMode(InputMode lastActionInputMode) {
+        this.lastActionInputMode = lastActionInputMode;
     }
 
     public List<DrawingShape> getShapesList() {
@@ -68,9 +68,7 @@ public class Model {
         this.inputMode = inputMode;
     }
 
-    public ShapeType getShapeTypeInput() {
-        return shapeTypeInput;
-    }
+
 
     public void setShapeTypeInput(ShapeType shapeTypeInput) {
         this.shapeTypeInput = shapeTypeInput;

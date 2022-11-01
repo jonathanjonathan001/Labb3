@@ -97,7 +97,7 @@ public class DrawController {
                 Color actualColor = colorPicker.getValue();
                 model.createShape(actualColor, x, y, size);
 
-
+                model.setLastActionInputMode(InputMode.DRAW);
                 render();
             }
             case SELECT -> {
@@ -133,6 +133,8 @@ public class DrawController {
             model.setUndoSize(model.getSelectedShape().getSize());
             model.getSelectedShape().setSize(size);
 
+            model.setLastActionInputMode(InputMode.SELECT);
+
             render();
         }
     }
@@ -140,19 +142,20 @@ public class DrawController {
 
     @FXML
     protected void onDrawModeClicked() {
-        model.setUndoDone(false);
+
         model.setInputMode(InputMode.DRAW);
     }
 
     @FXML
     protected void onSelectModeClicked() {
-        model.setUndoDone(false);
+
         model.setInputMode(InputMode.SELECT);
     }
 
     @FXML
     protected void onUndoClicked() {
-        switch (model.getInputMode()) {
+
+        switch (model.getLastActionInputMode()) {
             case DRAW -> {
                 List<DrawingShape> shapesList = model.getShapesList();
                 if (!model.getUndoDone() && !shapesList.isEmpty()) {
@@ -179,7 +182,7 @@ public class DrawController {
 
     @FXML
     protected void onRedoClicked() {
-        switch (model.getInputMode()) {
+        switch (model.getLastActionInputMode()) {
             case DRAW -> {
                 if (model.getUndoDone()) {
                     model.getShapesList().add(model.getUndoObject());

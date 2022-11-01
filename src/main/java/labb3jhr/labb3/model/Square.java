@@ -12,13 +12,8 @@ public class Square extends DrawingShape {
 
     @Override
     public boolean mouseCoordinatesAreOnMe(double mouseX, double mouseY) {
-        if (mouseX >= (getPosition().x()) && mouseX <= getPosition().x() + getSize()
-                && mouseY >= (getPosition().y()) && mouseY <= (getPosition().y() + getSize())) {
-            System.out.println("Mouse coordinates match");
-            return true;
-        }
-        else
-            return false;
+        return mouseX >= (getPosition().x()) && mouseX <= getPosition().x() + getSize()
+                && mouseY >= (getPosition().y()) && mouseY <= (getPosition().y() + getSize());
     }
 
     @Override
